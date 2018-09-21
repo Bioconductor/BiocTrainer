@@ -1,0 +1,15 @@
+Package: BiocTrainTheTrainer
+Title: Notes for 'train-the-trainer' sessions
+Version: 0.0.1
+Authors@R:
+    person(
+        "Martin", "Morgan", email = "Martin.Morgan@RoswellPark.org",
+        role = c("aut", "cre")
+    )
+Description: This package contains notes and lessons for
+    'train-the-trainer' sessions, emphasizing pedagogic approaches
+    rather than learning material.
+Depends: R (>= 3.5.1)
+License: CCO
+Encoding: UTF-8
+LazyData: true
