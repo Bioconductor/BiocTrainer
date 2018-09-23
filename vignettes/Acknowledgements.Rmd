@@ -1,0 +1,57 @@
+---
+title: "Acknowledgements"
+author:
+- name: Martin Morgan
+  affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
+date: September 27 2018
+output:
+  BiocStyle::html_document:
+    toc_float: true
+vignette: |
+  %\VignetteIndexEntry{Acknowledgements}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Core team
+
+- Herve Pages, Qian Liu (post-doc), Kayla Morrell, Valerie Obenchain,
+  Marcel Ramos, Lori Shepherd, Nitesh Turaga, Daniel van Twisk, Jiefei
+  Wang (PhD Research Assistant)
+- Michael Lawrence, James MacDonald, Andrzej Oles
+
+Technical advisory board
+
+- Vince Carey, Brigham & Women’s, Harvard Medical School, USA
+- Aedin Culhane, Dana-Farber Cancer Institute, Harvard School of
+  Public Health, USA
+- Sean Davis, National Cancer Institute, USA
+- Robert Gentleman, Computational Biology, 23andMe, USA
+- Kasper Daniel Hansen, Bloomberg School of Public Health, Johns
+  Hopkins University
+- Wolfgang Huber European Molecular Biology Laboratory, Heidelberg,
+  Germany
+- Rafael Irizarry Dana-Farber Cancer Institute, USA
+- Michael Lawrence, Genentech Research and Early Development, USA
+- Levi Waldron CUNY School of Public Health at Hunter College, New
+  York, NY.
+
+Funding
+
+- Research reported in this presentation was supported by the National
+  Human Genome Research Institute and the National Cancer Institute of
+  the National Institutes of Health under the following awards. The
+  content is solely the responsibility of the authors and does not
+  necessarily represent the official views of the National Institutes
+  of Health.
+  
+  - U41HG004059, _Bioconductor_: An Open Computing Resource for
+    Genomics.
+  - U24CA180996, Cancer Genomics: Integrative and Salable Solutions in
+    _R_ / _Bioconductor_.
+  - U24CA232979, mmuno-Oncology Translation Network: Data Management
+    and Resource-Sharing Center. 
+
+- Portions of this work was performed on behalf of the SOUND
+  Consortium and funded under the EU H2020 Personalizing Health and
+  Care Program, Action contract number 633974.
