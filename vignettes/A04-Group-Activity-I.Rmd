@@ -1,0 +1,15 @@
+---
+title: "Group Activity I"
+author:
+- name: Martin Morgan
+  affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
+date: September 27 2018
+output:
+  BiocStyle::html_document:
+    toc_float: true
+vignette: |
+  %\VignetteIndexEntry{Group Activity I}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+

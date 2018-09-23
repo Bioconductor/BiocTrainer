@@ -1,0 +1,15 @@
+---
+title: "Engaging new and experienced users"
+author:
+- name: Martin Morgan
+  affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
+date: September 27 2018
+output:
+  BiocStyle::html_document:
+    toc_float: true
+vignette: |
+  %\VignetteIndexEntry{Engaging new and experienced users}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
