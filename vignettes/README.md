@@ -2,7 +2,7 @@ _Bioconductor_ (https://bioconductor.org) is a flexible, widely used, and respec
 
 This workshop introduces strategies for effectively training users new to _Bioconductor_. Topics covered include the following
 
-1. Assessing abilities: where do we begin? (9:00 - 9:45)
+1. [Assessing abilities][1]: where do we begin? (9:00 - 9:45)
 
     Introduction. Course objectives. Course content.
 
@@ -11,7 +11,7 @@ This workshop introduces strategies for effectively training users new to _Bioco
     _R_ refresher. Atomic vectors. Functions. Classes and
     methods. Help. Packages.
 
-2. Engaging new and experienced users (9:45 - 10:30)
+2. [Engaging new and experienced users][2] (9:45 - 10:30)
 
     Data input and manipulation in base _R_. Tidy data.
     
@@ -19,27 +19,27 @@ This workshop introduces strategies for effectively training users new to _Bioco
 
 BREAK (10:30 - 10:45)
 
-3. Practical activities with meaningful feedback (10:45 - 11:30)
+3. [Practical activities][3] with meaningful feedback (10:45 - 11:30)
 
     _Bioconductor_ 'TxDb' and 'org' packages. Annotating ChIP-seq
     peaks. Scripts and functions.
 
-4. Group activity (11:30 - 12:15)
+4. [Group activity I][4] (11:30 - 12:15)
 
 LUNCH (12:15 - 1:15)
 
-5. Managing cognitive load (1:15 - 2:00)
+5. [Managing cognitive load][5] (1:15 - 2:00)
 
     RNA-seq differential expression. Count matrix. Experimental
     design. 'Top table'.
     
-6. Matching expectations with learning objectives (2:15 - 3:00)
+6. [Matching expectations and learning objectives][6] (2:15 - 3:00)
 
     Enabling independent learning. Package discovery and assessment.
 
 BREAK (3:00 - 3:15)
 
-7. Effective instruction and resources (3:15 - 4:00)
+7. [Effective instruction and resource creation][7] (3:15 - 4:00)
 
     Configured servers versus user laptops.
 
@@ -48,8 +48,19 @@ BREAK (3:00 - 3:15)
     
     Best practices, literate programming, version control.
     
-8. Group activity (4:00 - 4:45)
+8. [Group activity II][8] (4:00 - 4:45)
 
-9. What have we learned? (4:45 - 5:00)
+9. [What have we learned?][9] (4:45 - 5:00)
 
-Acknowledgements
+[Acknowledgements][10]
+
+[1]: ./A01-Assessing-Abilities.Rmd
+[2]: ./A02-Engaging-Users.Rmd
+[3]: ./A03-Practical-Activities.Rmd
+[4]: ./A04-Group-Activity-I.Rmd
+[5]: ./A05-Cognitive-Load.Rmd
+[6]: ./A06-Expectations-and-Objectives.Rmd
+[7]: ./A07-Effective-Instruction.Rmd
+[8]: ./A08-Group-Activity-II.Rmd
+[9]: ./A09-Lessons-Learned.Rmd
+[10]: ./Acknowledgements.Rmd
