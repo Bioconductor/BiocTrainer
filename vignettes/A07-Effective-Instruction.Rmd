@@ -1,5 +1,5 @@
 ---
-title: "Effective instruction and resources"
+title: "A07. Effective instruction and resources"
 author:
 - name: Martin Morgan
   affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
@@ -8,7 +8,7 @@ output:
   BiocStyle::html_document:
     toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Effective instruction and resources}
+  %\VignetteIndexEntry{A07. Effective instruction and resources}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

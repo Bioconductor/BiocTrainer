@@ -1,5 +1,5 @@
 ---
-title: "Assessing abilities: where do we begin?"
+title: "A01. Assessing abilities: where do we begin?"
 author:
 - name: Martin Morgan
   affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
@@ -8,7 +8,7 @@ output:
   BiocStyle::html_document:
     toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Assessing abilities: where do we begin?}
+  %\VignetteIndexEntry{A01. Assessing abilities: where do we begin?}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

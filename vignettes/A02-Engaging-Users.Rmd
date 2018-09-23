@@ -1,5 +1,5 @@
 ---
-title: "Engaging new and experienced users"
+title: "A02. Engaging new and experienced users"
 author:
 - name: Martin Morgan
   affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
@@ -8,8 +8,85 @@ output:
   BiocStyle::html_document:
     toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Engaging new and experienced users}
+  %\VignetteIndexEntry{A02. Engaging new and experienced users}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+# Data input and manipulation
+
+## Basic _R_
+
+Input
+
+```{r}
+dir("~/extdata")
+```
+
+```{r}
+csv <- read.csv("~/extdata/ALL.csv")
+head(csv)
+summary(csv)
+```
+
+Visualization
+
+- QUESTION: How to visualize the relationship between age and sex?
+
+    ```{r}
+    plot(age ~ sex, csv)
+    ```
+    
+Manipulation
+
+- QUESTION: Create a subset containing only females
+
+    ```{r}
+    females <- subset(csv, sex == "F")
+    ```
+    
+What about `csv[csv$sex == "F",]` ?
+
+- QUESTION: create a subset containing 'BCR/ABL' and 'NEG' individuals
+
+    ```{r}
+    bcrabl <- subset(csv, mol.biol %in% c("BCR/ABL", "NEG"))
+    ```
+    
+    ```{r}
+    summary(bcrabl)
+    bcrabl$mol.biol <- factor(bcrabl$mol.biol)
+    summary(bcrabl)
+    ```
+    
+## The tidyverse
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+tbl <- read_csv("~/extdata/ALL.csv")
+tbl
+```
+
+QUESTION: Important differences in data input and display?
+
+Select females wtih BCR/ABL or NEG
+
+```{r}
+tbl %>% filter(sex == "F", mol.biol %in% c("BCR/ABL", "NEG"))
+```
+
+Plotting with the 'grammar of graphics'
+
+```{r}
+ggplot(tbl, aes(x = sex, y = age)) + geom_boxplot()
+```
+
+```{r}
+tbl %>% filter(!is.na(sex), !is.na(age)) %>%
+    ggplot(aes(x = sex, y = age)) + geom_boxplot()
+```
+
+# Bioinformatics

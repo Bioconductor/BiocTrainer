@@ -1,5 +1,5 @@
 ---
-title: "Practical activities with meaningful feedback"
+title: "A03. Practical activities with meaningful feedback"
 author:
 - name: Martin Morgan
   affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
@@ -8,8 +8,74 @@ output:
   BiocStyle::html_document:
     toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Practical activities with meaningful feedback}
+  %\VignetteIndexEntry{A03. Practical activities with meaningful feedback}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+[ChIPseeker][] vignette
+
+- Urbanucci A, Sahu B, Seppälä J, Larjo A et al. Overexpression of
+  androgen receptor enhances the binding of the receptor to the
+  chromatin in prostate cancer. Oncogene 2012 Apr
+  26;31(17):2153-63. PMID: 21909140. [GSE48308][]
+  
+  
+[ChIPseeker]: https://bioconductor.org/packages/ChIPseeker
+[GSE48308]: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48308
+
+```{r, message=FALSE}
+library(rtracklayer)
+dir("~/extdata/chipseq")
+path <- "~/extdata/chipseq/GSM1174480_ARmo_0M_peaks.bed.gz"
+```
+
+```{r}
+peak <- import(path)
+peak
+```
+
+```{r, message=FALSE}
+library(ChIPseeker)
+covplot(peak)
+```
+
+```{r, message=FALSE}
+library(GenomicFeatures)                   # software
+library(TxDb.Hsapiens.UCSC.hg19.knownGene) # Gene and transcript models
+library(org.Hs.eg.db)                      # gene identifier maps
+```
+
+```{r}
+tx <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene)
+```
+
+```{r}
+nearest_tx <- tx[ nearest(peak, tx) ]
+```
+
+```{r}
+peak$ENTREZID <- mapIds(
+    TxDb.Hsapiens.UCSC.hg19.knownGene, nearest_tx$tx_name, "GENEID", "TXNAME"
+)
+idx <- !is.na(peak$ENTREZID)
+peak$SYMBOL[idx] <- mapIds(
+    org.Hs.eg.db, peak$ENTREZID[idx], "SYMBOL", "ENTREZID"
+)
+peak
+```
+
+```{r}
+annotate_peaks <- function(path, txdb) {
+    peak <- import(path)
+    tx <- transcripts(txdb)
+
+    nearest_tx <- tx[ nearest(peak, tx) ]
+
+    peak$ENTREZID <- mapIds(txdb, nearest_tx$tx_name, "GENEID", "TXNAME")
+    idx <- !is.na(peak$ENTREZID)
+    peak$SYMBOL[idx] <- 
+        mapIds(org.Hs.eg.db, peak$ENTREZID[idx], "SYMBOL", "ENTREZID")
+    peak
+}
+```

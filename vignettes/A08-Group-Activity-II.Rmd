@@ -1,5 +1,5 @@
 ---
-title: "Group activity II"
+title: "A08. Group activity II"
 author:
 - name: Martin Morgan
   affiliation: Roswell Park Comperhensive Cancer Center, Buffalo, NY
@@ -8,7 +8,7 @@ output:
   BiocStyle::html_document:
     toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Group activity II}
+  %\VignetteIndexEntry{A08. Group activity II}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
