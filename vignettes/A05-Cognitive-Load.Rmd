@@ -119,22 +119,16 @@ design = ~ cell + dex
 Building understanding
 
 ```{r}
-x <- rnorm(300)
-df <- data.frame(x, y = 0.5 + x + rnorm(300))
-plot(y ~ x, df)
-fit1 <- lm(y ~ x, df)
-abline(fit1, lwd=2, col="red")
+plot(mpg ~ wt, mtcars)
+anova(lm(mpg ~ wt, mtcars))
 ```
 
-QUESTION: regression through origin?
-
-- add term, in this case a constant
+Sequential sum-of-squares
 
 ```{r}
-fit2 <- lm(y ~ 0 + x, df)
-plot(y ~ x, df)
-abline(fit1, col = "red")
-abline(fit2, lwd = 2, col = "blue")
+with(mtcars, cor(wt, cyl))
+anova(lm(mpg ~ wt + cyl, mtcars))
+anova(lm(mpg ~ cyl + wt, mtcars))
 ```
 
 ## Library size
