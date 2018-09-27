@@ -37,6 +37,15 @@ CHALLENGES
 [airway]: https://bioconductor.org/packages/airway
 [GSE52778]: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52778
 
+# We are very demanding of students
+
+- Biological context
+- Experimental protocol
+- Statistical concepts
+- Bioinformatic analysis
+
+# Minimize the cost of initial analysis
+
 ```{r}
 colData <- read.csv("~/extdata/rnaseq/colData.csv", row.names=1)
 colData
@@ -48,10 +57,8 @@ counts <- as.matrix(counts)
 head(counts)
 ```
 
-Challenge: learning formulas
-
 ```{r}
-design = ~ 0 + cell + dex
+design = ~ cell + dex
 ```
 
 ```{r, message=FALSE}
@@ -68,7 +75,83 @@ results <- results(fit)
 head(results)
 ```
 
+# Present graphical representations with intuitive insight
+
+'Biological' significance (fold change, x-axis) and 'statistical'
+significance (P-value, y-axis)
+
 ```{r}
 results[order(results$padj),]
 plot(-log10(pvalue) ~ log2FoldChange, results)
 ```
+
+# Revisit specific steps to develop understanding
+
+## Visualization
+
+Importance of cell line is readily apparent
+
+```{r}
+d <- dist(t(log(1 + counts)))
+plot(cmdscale(d), col=colData$cell)
+```
+
+Distribution is strongly skewed(!)
+
+```{r}
+hist(counts[,1])
+```
+
+Mean / variance relationship is not consistent with simple Poisson model
+
+```{r}
+library(matrixStats)
+plot(rowVars(counts) ~ rowMeans(counts), log = "xy")
+abline(0, 1)
+```
+
+## Formula
+
+```{r}
+design = ~ cell + dex
+```
+
+Building understanding
+
+```{r}
+x <- rnorm(300)
+df <- data.frame(x, y = 0.5 + x + rnorm(300))
+plot(y ~ x, df)
+fit1 <- lm(y ~ x, df)
+abline(fit1, lwd=2, col="red")
+```
+
+QUESTION: regression through origin?
+
+- add term, in this case a constant
+
+```{r}
+fit2 <- lm(y ~ 0 + x, df)
+plot(y ~ x, df)
+abline(fit1, col = "red")
+abline(fit2, lwd = 2, col = "blue")
+```
+
+## Library size
+
+Simple calculation
+
+```{r}
+colSums(counts)
+```
+
+Distribution, e.g., of one sample
+
+```{r}
+hist(log(1 + counts[,1]))
+```
+
+Approaches to 'normalization'
+
+- QUESTION: Problems with arithmetic mean?
+- Solutions: log counts

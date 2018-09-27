@@ -121,6 +121,8 @@ anno <- annotatePeak(
 anno
 ```
 
+# Often packages introduce sophisticated approaches to data representation
+
 ```{r}
 plotAnnoPie(anno)
 ```

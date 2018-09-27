@@ -20,12 +20,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# _RStudio_
-
-Challenges
-
-- vignettes; screen real-estate
-
-# Live coding
+# Live coding and _RStudio_
 
 # _Jupyter_ notebooks

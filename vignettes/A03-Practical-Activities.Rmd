@@ -33,9 +33,16 @@ knitr::opts_chunk$set(
 
 # _GRanges_ are an important component of the _Bioconductor_ ecosystem
 
-QUESTION
+```{r, message=FALSE}
+library(rtracklayer)
+dir("~/extdata/chipseq")
+path <- "~/extdata/chipseq/GSM1174480_ARmo_0M_peaks.bed.gz"
+```
 
-- 
+```{r}
+peak <- import(path)
+peak
+```
 
 QUESTION
 
@@ -54,17 +61,6 @@ Comparing ranges between objects, e.g.,
 
 - `nearest(x, subject)` for each range in `x`, find the index of the
   nearest range in `subject`.
-
-```{r, message=FALSE}
-library(rtracklayer)
-dir("~/extdata/chipseq")
-path <- "~/extdata/chipseq/GSM1174480_ARmo_0M_peaks.bed.gz"
-```
-
-```{r}
-peak <- import(path)
-peak
-```
 
 # Objects and their methods provide building blocks for meaningful manipulation
 

@@ -42,7 +42,7 @@ Audiencies are always diverse...
     
 # How much _R_ do you know?
 
-## Objects and functions
+## Objects and functions are central to _R_
 
 ```{r, eval=FALSE}
 x <- rnorm(300)
