@@ -13,6 +13,13 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r style, echo = FALSE, results = 'asis'}
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "TRUE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE"))
+)
+```
+
 [ChIPseeker][] vignette
 
 - Urbanucci A, Sahu B, Seppälä J, Larjo A et al. Overexpression of
@@ -23,6 +30,30 @@ vignette: |
   
 [ChIPseeker]: https://bioconductor.org/packages/ChIPseeker
 [GSE48308]: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48308
+
+# _GRanges_ are an important component of the _Bioconductor_ ecosystem
+
+QUESTION
+
+- 
+
+QUESTION
+
+- Use `methods(class="GRanges")` to see (many of the) methods
+  available for a `GRanges` object.
+
+Manipulating each range, e.g.,
+
+- `flank()` selects ranges up- or down- stream of individual ranges.
+
+Comparing ranges in a single object, e.g.,
+
+- `any(duplicated(bed))`
+
+Comparing ranges between objects, e.g.,
+
+- `nearest(x, subject)` for each range in `x`, find the index of the
+  nearest range in `subject`.
 
 ```{r, message=FALSE}
 library(rtracklayer)
@@ -35,16 +66,25 @@ peak <- import(path)
 peak
 ```
 
-```{r, message=FALSE}
-library(ChIPseeker)
-covplot(peak)
-```
+# Objects and their methods provide building blocks for meaningful manipulation
 
 ```{r, message=FALSE}
 library(GenomicFeatures)                   # software
 library(TxDb.Hsapiens.UCSC.hg19.knownGene) # Gene and transcript models
-library(org.Hs.eg.db)                      # gene identifier maps
 ```
+
+```{r}
+exons <- exons(TxDb.Hsapiens.UCSC.hg19.knownGene)
+peak$exonic <- peak %over% exons
+```
+
+```{r}
+peak$genic <- peak %over% genes(TxDb.Hsapiens.UCSC.hg19.knownGene)
+```
+
+QUESTION: what about peaks overlapping introns?
+
+QUESTION: nearest transcripts?
 
 ```{r}
 tx <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene)
@@ -52,6 +92,10 @@ tx <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene)
 
 ```{r}
 nearest_tx <- tx[ nearest(peak, tx) ]
+```
+
+```{r, message=FALSE}
+library(org.Hs.eg.db)                      # gene identifier maps
 ```
 
 ```{r}
@@ -65,17 +109,26 @@ peak$SYMBOL[idx] <- mapIds(
 peak
 ```
 
+# Your own functions capture complex transformations for easy reuse
+
 ```{r}
-annotate_peaks <- function(path, txdb) {
+annotate_peaks <- function(path, txdb, orgdb) {
     peak <- import(path)
+
+    peak$genic <- peak %over% genes(txdb)
+    peak$exonic <- peak %over% exons(txdb)
+    peak$intronic <- peak %over% intronsByTranscript(txdb)
+
     tx <- transcripts(txdb)
-
     nearest_tx <- tx[ nearest(peak, tx) ]
-
     peak$ENTREZID <- mapIds(txdb, nearest_tx$tx_name, "GENEID", "TXNAME")
     idx <- !is.na(peak$ENTREZID)
     peak$SYMBOL[idx] <- 
-        mapIds(org.Hs.eg.db, peak$ENTREZID[idx], "SYMBOL", "ENTREZID")
+        mapIds(orgdb, peak$ENTREZID[idx], "SYMBOL", "ENTREZID")
     peak
 }
+```
+
+```{r}
+annotate_peaks(path, TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db)
 ```

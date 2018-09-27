@@ -4,18 +4,16 @@ This workshop introduces strategies for effectively training users new to _Bioco
 
 1. [Assessing abilities][1]: where do we begin? (9:00 - 9:45)
 
-    Introduction. Course objectives. Course content.
-
-    Biology - statistics - computation skills. Experience with _R_.
-    
-    _R_ refresher. Atomic vectors. Functions. Classes and
+    Introduction. Course objectives. Course content.  Biology -
+    statistics - computation skills. Experience with _R_.  _R_
+    refresher. Atomic vectors. Functions. Classes and
     methods. Help. Packages.
 
 2. [Engaging new and experienced users][2] (9:45 - 10:30)
 
     Data input and manipulation in base _R_. Tidy data.
-    
-    _Bioconductor_. Bioinformatic data types and input. Genomic ranges.
+    _Bioconductor_. Bioinformatic data types and input. Genomic
+    ranges.
 
 BREAK (10:30 - 10:45)
 
@@ -41,12 +39,9 @@ BREAK (3:00 - 3:15)
 
 7. [Effective instruction and resource creation][7] (3:15 - 4:00)
 
-    Configured servers versus user laptops.
-
-    Using _RStudio_. Markdown vignettes. Course packages. _Jupyter_
-    notebooks.
-    
-    Best practices, literate programming, version control.
+    Configured servers versus user laptops.  Using _RStudio_. Markdown
+    vignettes. Course packages. _Jupyter_ notebooks.  Best practices,
+    literate programming, version control.
     
 8. [Group activity II][8] (4:00 - 4:45)
 

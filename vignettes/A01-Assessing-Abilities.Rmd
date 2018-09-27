@@ -13,3 +13,163 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r style, echo = FALSE, results = 'asis'}
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "TRUE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE"))
+)
+```
+
+# What are your interests and abilities?
+
+Audiencies are always diverse...
+
+- QUESTION: Divide yourself into percentiles reflecting your expertise
+  in biology, statistics, and informatics. For instance, a pure
+  biologist might be 90% / 5% / 5%, whereas a statistician with some
+  computational skill might be 10% / 60% / 30%.
+
+...and with a wide range of skills
+
+- QUESTION: rate your experience in _R_ by accumulating one point for
+  each statement you are comfortable with
+
+    - _R_ is a letter of the alphabet
+    - I have used _R_ a little, e.g., to plot data.
+    - I have used _R_ scripts
+    - I use _R_ regularly for data analysis
+    - I have written an _R_ package
+    
+# How much _R_ do you know?
+
+## Objects and functions
+
+```{r, eval=FALSE}
+x <- rnorm(300)
+df <- data.frame(x, y = x + rnorm(300))
+plot(y ~ x, df)
+fit <- lm(y ~ x, df)
+anova(fit)
+```
+
+QUESTIONS: Understanding _R_
+
+- What fraction of the lines do you understand? Your score will range
+  from 0/5 to 5/5.
+
+- How would you add the fitted regression line to the plot?
+  
+- What does the notation `y ~ x` mean?
+
+- How would you fit a regression line that had to pass through the
+  origin?
+  
+QUESTIONS: _R_ terminology
+
+- There are three objects in the example, `x` ,`df`, and `fit`. Which
+  object is an 'atomic' vector? What is the class of each of the other
+  objects? What other classes of atomic vector are there?
+  
+- Which of `rnorm()`, `data.frame()`, `plot()`, `lm()`, and `anova()`
+  are plain _R_ functions, and which are 'generic' functions? For the
+  generics, what specific method is invoked?
+
+- What class is `y ~ x`? 
+
+QUESTIONS: Navigating _R_'s help
+
+- From the help page for `rnorm()`, `?rnorm`, what other arguments are
+  available? What are the default values for those arguments? Is there
+  another way within _R_ to find out this information?
+  
+- How would you find help on the `formula` method for the `plot` generic?
+
+- What methods are available for objects of class `lm`?
+
+## Base _R_ is essential for working with data...
+
+Input
+
+```{r}
+dir("~/extdata")
+```
+
+```{r}
+csv <- read.csv("~/extdata/ALL.csv")
+head(csv)
+summary(csv)
+```
+
+Visualization
+
+- QUESTION: How to visualize the relationship between age and sex?
+
+    ```{r}
+    plot(age ~ sex, csv)
+    ```
+    
+Manipulation
+
+- QUESTION: Create a subset containing only females
+
+    ```{r}
+    females <- subset(csv, sex == "F")
+    ```
+    
+  What about `csv[csv$sex == "F",]` ?
+
+- QUESTION: create a subset containing 'BCR/ABL' and 'NEG' individuals
+
+    ```{r}
+    bcrabl <- subset(csv, mol.biol %in% c("BCR/ABL", "NEG"))
+    ```
+    
+    ```{r}
+    summary(bcrabl)
+    bcrabl$mol.biol <- factor(bcrabl$mol.biol)
+    summary(bcrabl)
+    ```
+    
+## ...but in _R_ there is never only one way: packages
+
+The 'tidyverse' takes a very different approach to working with data
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+Use the tidyverse function `read_csv()` to read our csv file.
+
+```{r}
+tbl <- read_csv("~/extdata/ALL.csv")
+tbl
+```
+
+QUESTIONS: 
+
+- What important differences occur during 'tidy' data input? What
+  about in the display of data?
+
+- Use `filter()` to select females wtih BCR/ABL or NEG
+
+    ```{r}
+    tbl %>% filter(sex == "F", mol.biol %in% c("BCR/ABL", "NEG"))
+    ```
+    
+- Use `geom_boxplot()` to view filtered data using the 'grammar of
+  graphics'
+
+    ```{r}
+    tbl %>% filter(!is.na(sex), !is.na(age)) %>%
+        ggplot(aes(x = sex, y = age)) + geom_boxplot()
+    ```
+    
+It's useful to reflect on why the tidyverse has become very popular
+
+- A first goal in any analysis is to arrange data into a single
+  structure organized along common principles -- 'tidy' data
+  represented in a tibble.
+- A few 'verbs' enable a lot of work -- `filter()`, `select()`,
+  `mutate()`, `group_by()`, `summarize()`.
+- Most verbs are 'endomorphic' -- they return the same class of object
+  (a tibble) that they take as their first argument

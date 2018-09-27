@@ -13,3 +13,71 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r style, echo = FALSE, results = 'asis'}
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "TRUE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE"))
+)
+```
+
+Abilities
+
+- Classes are almost always very diverse
+
+    - Biological, computational, statistical background
+    - _R_ abillities
+    
+- _R_ refreshers are almost always necessary
+
+    - Bring participants to a common level
+    - Empahsize concepts particular relevant to _Bioconductor_
+
+Engaging users
+
+- Many biologically interseting tasks can be accomplished in relatively few steps
+
+    - Requires familiarity with 'package' concepts
+    - Exposes users to _Bioconductor_ objects
+  
+- An important outcome is to trust packages to do better than oneself
+
+Practical activities
+
+- Encourage exploration of software
+
+- Introduces better practices
+
+    - Reproducible scripts
+    - Perhaps markdown, version control
+
+- Introduces programming concepts
+
+    - Functions
+
+Cognitive load
+
+- High-level work flows provide a context for additional detail
+
+    - 'formula' concepts
+    - Exploring data
+
+Expectations and objectives
+
+- A course cannot address naive expectations for comprehensive analysis
+
+- Convey instead skills in finding, evaluating, and using packages
+
+- Use specific work flows (e.g., RNA-seq) to model rigorous approaches
+
+Effective instruction
+
+- Live coding (e.g., in _RStudio_) is essential
+
+    - Pace
+    - Errors
+    - Help
+    - Diversions
+
+- Notebooks orient focused analysis, e.g., standardized RNAseq work flow
+
+    - Guided exploration

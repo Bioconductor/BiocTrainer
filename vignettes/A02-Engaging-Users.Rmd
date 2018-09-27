@@ -13,80 +13,122 @@ vignette: |
   %\VignetteEncoding{UTF-8}
 ---
 
-# Data input and manipulation
-
-## Basic _R_
-
-Input
-
-```{r}
-dir("~/extdata")
+```{r style, echo = FALSE, results = 'asis'}
+knitr::opts_chunk$set(
+    eval=as.logical(Sys.getenv("KNITR_EVAL", "TRUE")),
+    cache=as.logical(Sys.getenv("KNITR_CACHE", "TRUE"))
+)
 ```
 
+# File-based data formats pervade bioinformatics
+
+Bioinformatics data often comes in particular file formats
+
+- FASTA: DNA or RNA sequence(s)
+- FASTQ: short DNA reads and their quality scores, from
+  high-throughput sequencing
+- SAM / BAM: aligned reads
+- GFF / GTF: gene models
+- BED: genomic annotation 'tracks'
+- ...
+
+Files are often 'easy' to read using base _R_ commands, but they often
+have subtle issues. For instance, BED files describe genomic ranges
+using 0-based, half-open intervals whereas other file formats use
+1-based, closed intervals or do not specify how genomic coordinates
+are represented.
+
+# _Bioconductor_ represents data in standardized ways
+
+_Bioconductor_ software tries to adopt a consistent scheme for
+representing genomic ranges -- 1-based, closed intervals. 
+
+The `GenomicRanges` class emphasizes this standardized structure, and
+enables interoperability between packages.
+
+Here is a BED file containing peaks from a ChIP-seq experiment.
+
 ```{r}
-csv <- read.csv("~/extdata/ALL.csv")
-head(csv)
-summary(csv)
+path <- "~/extdata/chipseq/GSM1174480_ARmo_0M_peaks.bed.gz"
 ```
 
-Visualization
+It is a plain-old tab-delimited file with three columns
 
-- QUESTION: How to visualize the relationship between age and sex?
+```{r}
+readLines(path, 3)
+```
 
-    ```{r}
-    plot(age ~ sex, csv)
-    ```
-    
-Manipulation
-
-- QUESTION: Create a subset containing only females
-
-    ```{r}
-    females <- subset(csv, sex == "F")
-    ```
-    
-What about `csv[csv$sex == "F",]` ?
-
-- QUESTION: create a subset containing 'BCR/ABL' and 'NEG' individuals
-
-    ```{r}
-    bcrabl <- subset(csv, mol.biol %in% c("BCR/ABL", "NEG"))
-    ```
-    
-    ```{r}
-    summary(bcrabl)
-    bcrabl$mol.biol <- factor(bcrabl$mol.biol)
-    summary(bcrabl)
-    ```
-    
-## The tidyverse
+Import the BED file into _R_ using the [rtracklayer][] package
+`import()` function.
 
 ```{r, message=FALSE}
-library(tidyverse)
+library(rtracklayer)
+bed <- import(path)
+```
+
+Display the object, looking closely at the information... How have
+individual ranges been standardized?
+
+```{r}
+bed
+```
+
+[rtracklayer]: https://bioconductor.org/packages/rtracklayer
+
+# Many packages provide compact work flows for standard analysis
+
+[ChIPseeker][] vignette
+
+- Urbanucci A, Sahu B, Seppälä J, Larjo A et al. Overexpression of
+  androgen receptor enhances the binding of the receptor to the
+  chromatin in prostate cancer. Oncogene 2012 Apr
+  26;31(17):2153-63. PMID: 21909140. [GSE48308][]
+  
+[ChIPseeker]: https://bioconductor.org/packages/ChIPseeker
+[GSE48308]: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE48308
+
+```{r, message=FALSE}
+library(ChIPseeker)
 ```
 
 ```{r}
-tbl <- read_csv("~/extdata/ALL.csv")
-tbl
+fls <- dir("~/extdata/chipseq", "*bed.gz", full = TRUE)
+peak <- readPeakFile(fls[[4]])
+peak
+covplot(peak)
 ```
 
-QUESTION: Important differences in data input and display?
-
-Select females wtih BCR/ABL or NEG
-
-```{r}
-tbl %>% filter(sex == "F", mol.biol %in% c("BCR/ABL", "NEG"))
-```
-
-Plotting with the 'grammar of graphics'
-
-```{r}
-ggplot(tbl, aes(x = sex, y = age)) + geom_boxplot()
+```{r, message=FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 ```
 
 ```{r}
-tbl %>% filter(!is.na(sex), !is.na(age)) %>%
-    ggplot(aes(x = sex, y = age)) + geom_boxplot()
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+promoter <- getPromoters(TxDb=txdb, upstream=3000, downstream=3000)
+tagMatrix <- getTagMatrix(peak, windows=promoter)
+dim(tagMatrix)
+plotAvgProf(tagMatrix, xlim=c(-3000, 3000))
 ```
 
-# Bioinformatics
+```{r}
+tagHeatmap(tagMatrix, xlim=c(-3000, 3000))
+```
+
+```{r}
+anno <- annotatePeak(
+    fls[[4]], tssRegion=c(-3000, 3000), TxDb=txdb, annoDb="org.Hs.eg.db"
+)
+anno
+```
+
+```{r}
+plotAnnoPie(anno)
+```
+
+```{r}
+upsetplot(anno)
+```
+
+```{r}
+ChIPseeker::as.GRanges(anno)
+```
