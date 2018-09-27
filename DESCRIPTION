@@ -12,6 +12,7 @@ Description: This package contains notes and lessons for
 Depends: R (>= 3.5.1)
 Suggests: DESeq2, ChIPseeker, TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db,
     rtracklayer, GenomicFeatures, tidyverse
+VignetteBuilder: knitr
 License: CCO
 Encoding: UTF-8
 LazyData: true
